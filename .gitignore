@@ -3,3 +3,25 @@
 
 # Ignore Gradle build output directory
 build
+
+# macOS system files
+**/.DS_Store
+
+# IDE configs
+.vscode/
+.idea/
+
+# Build output
+/build/
+app/build/
+
+# Output directories
+app/output/
+
+# Compiled class files
+*.class
+
+# Test artifacts
+app/src/test/
+
+LyricsImporter/myenv

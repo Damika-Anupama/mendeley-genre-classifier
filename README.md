@@ -12,13 +12,6 @@ A Java-based web application that classifies song lyrics into 7 music genres usi
 * Visualization of genre probabilities using a responsive bar chart
 * Modal dialog shows the top predicted genre with confidence
 
----
-
-## 🎥 Demonstration
-<video width="850" height="550" controls>
-  <source src="assets/demonstration.mp4" type="video/mp4">
-</video>
-
 ## 🚀 Running the App
 
 ### Prerequisites
@@ -41,8 +34,6 @@ A Java-based web application that classifies song lyrics into 7 music genres usi
    * Launch the Jetty server on `http://localhost:8080`
    * Open the default browser
 
----
-
 ## 📂 Project Structure
 
 ```
@@ -61,8 +52,6 @@ A Java-based web application that classifies song lyrics into 7 music genres usi
 │   │           └── index.html               # Web UI
 ```
 
----
-
 ## 🔧 How It Works
 
 * `Main.java` loads the Spark model and starts the server. Initially need to run `./gradlew build` and `./gradlew run` to run the NLP pipeline and save the model. Then you can use `./run.sh` to run the server.
@@ -72,8 +61,6 @@ A Java-based web application that classifies song lyrics into 7 music genres usi
 * Spark `PipelineModel` transforms the lyrics and returns genre probabilities
 * `index.html` visualizes results with a bar chart (Chart.js)
 * Highest scored genre is shown in a styled popup modal
-
----
 
 ## 📦 Building the JAR (manually)
 
@@ -89,8 +76,6 @@ The output fat JAR will be at:
 build/libs/mendeley-web-all.jar
 ```
 
----
-
 ## ✅ Example Input
 
 Paste lyrics like:
@@ -103,8 +88,6 @@ You're only young but you're gonna die
 ```
 
 Then click **Classify Genre**.
-
----
 
 ## 📋 License
 

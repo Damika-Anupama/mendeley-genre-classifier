@@ -15,7 +15,9 @@ A Java-based web application that classifies song lyrics into 7 music genres usi
 ---
 
 ## 🎥 Demonstration
-![Demo](assets/demonstration.mp4)
+<video width="850" height="550" controls>
+  <source src="assets/demonstration.mp4" type="video/mp4">
+</video>
 
 ## 🚀 Running the App
 

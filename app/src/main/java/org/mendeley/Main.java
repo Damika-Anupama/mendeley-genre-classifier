@@ -6,15 +6,13 @@ import org.apache.spark.ml.PipelineModel;
 import org.apache.spark.ml.PipelineStage;
 import org.apache.spark.ml.feature.Tokenizer;
 import org.apache.spark.ml.feature.StopWordsRemover;
-import org.apache.spark.ml.feature.Word2Vec;
 import org.mendeley.transformer.*;
 import org.mendeley.map.Column;
 import org.mendeley.map.StringIndexer;
-import org.apache.spark.ml.classification.LogisticRegression;
 import org.apache.spark.ml.classification.MultilayerPerceptronClassifier;
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator;
-import org.apache.spark.ml.classification.RandomForestClassifier;
 import org.apache.spark.ml.feature.HashingTF;
+import java.io.IOException;
 
 public class Main {
     private static final String RELEASE_DATE_COLUMN = "release_date";
@@ -29,7 +27,7 @@ public class Main {
 
         Dataset<Row> data = spark.read().format("csv")
                 .option("header", "true")
-                .load("data/original_song_dataset.csv");
+                .load("data/Merged_dataset.csv");
         data = data.select("artist_name", "track_name", RELEASE_DATE_COLUMN, "genre", "lyrics");
         data = data.withColumn(RELEASE_DATE_COLUMN, functions.col(RELEASE_DATE_COLUMN).cast("int"));
         data = data.withColumnRenamed("lyrics", Column.VALUE.getName());
@@ -91,7 +89,7 @@ public class Main {
         MultilayerPerceptronClassifier mlp = new MultilayerPerceptronClassifier()
                 .setFeaturesCol("features")
                 .setLabelCol("label")
-                .setLayers(new int[]{5000, 100, 50, 7}) // Replace `featuresDim` with your feature vector size
+                .setLayers(new int[]{5000, 100, 50, 8}) // Replace `featuresDim` with your feature vector size
                 .setBlockSize(128)
                 .setMaxIter(100)
                 .setSeed(1234);
@@ -106,5 +104,24 @@ public class Main {
 
         double accuracy = evaluator.evaluate(predictions);
         System.out.println("Test Accuracy = " + accuracy);
+
+        // Final pipeline (features + classifier)
+        Pipeline fullPipeline = new Pipeline().setStages(new PipelineStage[]{
+                cleanser, numerator, tokenizer, stopWordsRemover,
+                exploder, stemmer, uniter, verser, hashingTF, mlp
+        });
+
+        PipelineModel fullModel = fullPipeline.fit(data);
+
+        // ✅ Save trained full model
+        try {
+            fullModel.write().overwrite().save("model");
+        } catch (IOException e) {
+            System.err.println("Error saving the model: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        System.out.println("✅ Model saved to ./model");
+        spark.stop();
     }
 }

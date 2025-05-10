@@ -25,3 +25,6 @@ app/output/
 app/src/test/
 
 LyricsImporter/myenv
+
+# exclude the model
+app/model

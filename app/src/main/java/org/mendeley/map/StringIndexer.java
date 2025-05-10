@@ -21,6 +21,7 @@ public class StringIndexer {
         genreMap.put("reggae", 4);
         genreMap.put("rock", 5);
         genreMap.put("hip hop", 6);
+        genreMap.put("folk", 7);
 
         // Define a UDF to map genre strings to indices
         UDF1<String, Integer> genreToIndex = new UDF1<String, Integer>() {
